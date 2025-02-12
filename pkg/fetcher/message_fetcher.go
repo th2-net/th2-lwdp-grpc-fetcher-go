@@ -41,13 +41,13 @@ type LwdpFetcher struct {
 	dpClient lwdp.DataProviderClient
 }
 
-func NewLwdpFetcher(router grpc.Router) (*LwdpFetcher, error) {
+func NewLwdpFetcher(router grpc.Router) (LwdpFetcher, error) {
 	conn, err := router.GetConnection(lwdpService)
 	if err != nil {
-		return nil, fmt.Errorf("getting connection for '%s' service failure: %w", lwdpService, err)
+		return LwdpFetcher{}, fmt.Errorf("getting connection for '%s' service failure: %w", lwdpService, err)
 	}
 	client := lwdp.NewDataProviderClient(conn)
-	return &LwdpFetcher{dpClient: client}, nil
+	return LwdpFetcher{dpClient: client}, nil
 }
 
 func (f *LwdpFetcher) GetLastGroupedMessage(ctx context.Context, book string, group string, alias string, direction common.Direction, format string) (*lwdp.MessageGroupResponse, error) {
@@ -68,8 +68,8 @@ func (f *LwdpFetcher) GetLastGroupedMessage(ctx context.Context, book string, gr
 		StartTimestamp:  timestamppb.Now(),
 		EndTimestamp:    &timestamppb.Timestamp{Seconds: 0, Nanos: 0},
 		BookId:          &lwdp.BookId{Name: book},
-		MessageGroup:    []*lwdp.MessageGroupsSearchRequest_Group{&lwdp.MessageGroupsSearchRequest_Group{Name: group}},
-		Stream:          []*lwdp.MessageStream{&lwdp.MessageStream{Name: alias, Direction: direction}},
+		MessageGroup:    []*lwdp.MessageGroupsSearchRequest_Group{{Name: group}},
+		Stream:          []*lwdp.MessageStream{{Name: alias, Direction: direction}},
 		SearchDirection: lwdp.TimeRelation_PREVIOUS,
 		ResponseFormats: []string{format},
 	}
@@ -79,18 +79,33 @@ func (f *LwdpFetcher) GetLastGroupedMessage(ctx context.Context, book string, gr
 	}
 	for {
 		res, err := stream.Recv()
-		switch err {
-		case nil:
-			logger.Trace().Str("operation", "GetLastGroupedMessage").Any("data", res.Data).Str("book", book).Str("group", group).Str("alias", alias).Any("direction", direction).Msg("received data")
-		case io.EOF:
-			logger.Trace().Str("operation", "GetLastGroupedMessage").Str("book", book).Str("group", group).Str("alias", alias).Any("direction", direction).Msg("end of stream")
-			return nil, nil
-		default:
+		if err != nil {
+			if errors.Is(err, io.EOF) {
+				logger.Trace().
+					Str("operation", "GetLastGroupedMessage").
+					Str("book", book).
+					Str("group", group).
+					Str("alias", alias).
+					Any("direction", direction).
+					Msg("end of stream")
+				return nil, nil
+			}
 			return nil, fmt.Errorf("receiving message groups by [book=%s, group=%s, alias=%s, direction=%d] parameters failure: %w", book, group, alias, direction, err)
 		}
+		logger.Trace().
+			Str("operation", "GetLastGroupedMessage").
+			Any("data", res.Data).
+			Str("book", book).
+			Str("group", group).
+			Str("alias", alias).
+			Any("direction", direction).
+			Msg("received data")
 		msg := res.GetMessage()
 		if msg != nil {
-			logger.Info().Str("operation", "GetLastGroupedMessage").Any("message-id", msg.MessageId).Msg("received message")
+			logger.Info().
+				Str("operation", "GetLastGroupedMessage").
+				Any("message-id", msg.MessageId).
+				Msg("received message")
 			return res.GetMessage(), nil
 		}
 	}
