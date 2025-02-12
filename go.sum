@@ -13,8 +13,8 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/rs/xid v1.4.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
 github.com/rs/zerolog v1.29.0 h1:Zes4hju04hjbvkVkOhdl2HpZa+0PmVwigmo8XoORE5w=
 github.com/rs/zerolog v1.29.0/go.mod h1:NILgTygv/Uej1ra5XxGf82ZFSLk58MFGAUS2o6usyD0=
-github.com/th2-net/th2-common-go v0.2.2-0.20250211155721-876fd59417bc h1:T22WlmZh65AvWD3ySWjUDLZY02kxkzcoUOqwTlx5c3s=
-github.com/th2-net/th2-common-go v0.2.2-0.20250211155721-876fd59417bc/go.mod h1:XuSIqyj2+3KUWXtbDMbS+8D/pcWp42+xm7DWKBUhQUA=
+github.com/th2-net/th2-common-go v0.3.0 h1:kVD88FuMH9aLOeJJmUiyx0QjJaz3gnTFl3rUcN31y6k=
+github.com/th2-net/th2-common-go v0.3.0/go.mod h1:XuSIqyj2+3KUWXtbDMbS+8D/pcWp42+xm7DWKBUhQUA=
 github.com/th2-net/th2-grpc-common-go v0.0.1 h1:Wx/u8yb6UinTNVVT4XoTr1dOM0nUP3Rop4KlF+IZE9U=
 github.com/th2-net/th2-grpc-common-go v0.0.1/go.mod h1:MmWGanS+urhYgXFuPA6j/NvAcnpxUQepzkDV5Vh+96g=
 github.com/th2-net/th2-grpc-lw-data-provider-go v0.0.1 h1:7EMwvwYlHcoNxRxs7jZ47w08KVsSsErhOC1UCHGBZoI=
