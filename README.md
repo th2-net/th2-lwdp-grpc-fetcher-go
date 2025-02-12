@@ -56,11 +56,11 @@ import (
 func main() {
     // ... other code ...
     ctx, cancel := context.WithTimeout(context.Background(), time.Duration(1000)*time.Millisecond)
-	defer cancel()
-	msg, err := lwdp.GetLastGroupedMessage(ctx, "book", "group", "alias", grpc_common.Direction_FIRST, fetcher.LwdpBase64Format)
-	if err != nil {
-		panic(err)
-	}
-	// ... other code ...
+    defer cancel()
+    msg, err := lwdp.GetLastGroupedMessage(ctx, "book", "group", "alias", grpc_common.Direction_FIRST, fetcher.LwdpBase64Format)
+    if err != nil {
+	panic(err)
+    }
+    // ... other code ...
 }
 ```
