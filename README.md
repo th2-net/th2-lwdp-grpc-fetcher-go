@@ -14,28 +14,28 @@ This structure holds gRPC client made by [lw_data_provider.proto](https://github
 package main
 
 import (
-	"github.com/th2-net/th2-common-go/pkg/factory"
-	"github.com/th2-net/th2-common-go/pkg/modules/grpc"
-	"github.com/th2-net/th2-lwdp-grpc-fetcher-go/pkg/fetcher"
+    "github.com/th2-net/th2-common-go/pkg/factory"
+    "github.com/th2-net/th2-common-go/pkg/modules/grpc"
+    "github.com/th2-net/th2-lwdp-grpc-fetcher-go/pkg/fetcher"
 )
 
 func main() {
-	newFactory := factory.New()
-	defer newFactory.Close()
+    newFactory := factory.New()
+    defer newFactory.Close()
 
-	if err := newFactory.Register(grpc.NewModule); err != nil {
-		panic(err)
-	}
+    if err := newFactory.Register(grpc.NewModule); err != nil {
+        panic(err)
+    }
 
-	mod, err := grpc.ModuleID.GetModule(newFactory)
-	if err != nil {
-		panic(err)
-	}
-	router := mod.GetRouter()
-	lwdp, err := fetcher.NewLwdpFetcher(router)
-	if err != nil {
-		panic(err)
-	}
+    mod, err := grpc.ModuleID.GetModule(newFactory)
+    if err != nil {
+        panic(err)
+    }
+    router := mod.GetRouter()
+    lwdp, err := fetcher.NewLwdpFetcher(router)
+    if err != nil {
+        panic(err)
+    }
     // ... other code ...
 }
 ```
@@ -48,9 +48,9 @@ Makes `DataProvider.SearchMessageGroups` gRPC request by parameters to get the l
 ```go
 import (
     // ... other imports ...
-	"github.com/th2-net/th2-common-go/pkg/factory"
-	"github.com/th2-net/th2-common-go/pkg/modules/grpc"
-	"github.com/th2-net/th2-lwdp-grpc-fetcher-go/pkg/fetcher"
+    "github.com/th2-net/th2-common-go/pkg/factory"
+    "github.com/th2-net/th2-common-go/pkg/modules/grpc"
+    "github.com/th2-net/th2-lwdp-grpc-fetcher-go/pkg/fetcher"
 )
 
 func main() {
@@ -59,7 +59,7 @@ func main() {
     defer cancel()
     msg, err := lwdp.GetLastGroupedMessage(ctx, "book", "group", "alias", grpc_common.Direction_FIRST, fetcher.LwdpBase64Format)
     if err != nil {
-	panic(err)
+        panic(err)
     }
     // ... other code ...
 }
