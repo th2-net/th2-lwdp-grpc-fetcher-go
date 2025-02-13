@@ -50,7 +50,7 @@ func NewLwdpFetcher(router grpc.Router) (LwdpFetcher, error) {
 	return LwdpFetcher{dpClient: client}, nil
 }
 
-func (f *LwdpFetcher) GetLastGroupedMessage(ctx context.Context, book string, group string, alias string, direction common.Direction, format string) (*lwdp.MessageGroupResponse, error) {
+func (f LwdpFetcher) GetLastGroupedMessage(ctx context.Context, book string, group string, alias string, direction common.Direction, format string) (*lwdp.MessageGroupResponse, error) {
 	if book == "" {
 		return nil, errors.New("book can't be empty")
 	}
