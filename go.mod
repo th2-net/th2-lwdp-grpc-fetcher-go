@@ -1,12 +1,12 @@
 module github.com/th2-net/th2-lwdp-grpc-fetcher-go
 
-go 1.21.0
+go 1.22
 
 require (
 	github.com/th2-net/th2-common-go v0.3.0
 	github.com/th2-net/th2-grpc-common-go v0.0.1
 	github.com/th2-net/th2-grpc-lw-data-provider-go v0.0.1
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.7
 )
 
 require (
