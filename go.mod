@@ -6,7 +6,7 @@ require (
 	github.com/th2-net/th2-common-go v0.3.0
 	github.com/th2-net/th2-grpc-common-go v0.0.1
 	github.com/th2-net/th2-grpc-lw-data-provider-go v0.0.1
-	google.golang.org/protobuf v1.36.10
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
